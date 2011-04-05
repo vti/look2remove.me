@@ -1,9 +1,9 @@
-package Plack::Middleware::Static;
+package Look2RemoveMe::Middleware::StaticWithRTL;
 
 use strict;
 use warnings;
 
-use base qw/Plack::App::File/;
+use base 'Plack::Middleware::Static';
 
 use Look2RemoveMe::App::FileWithRTL;
 

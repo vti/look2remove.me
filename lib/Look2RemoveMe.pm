@@ -31,7 +31,7 @@ sub compile_psgi_app {
 
         enable '+Lamework::Middleware::ActionBuilder';
 
-        enable '+Lamework::Middleware::ViewRenderer';
+        enable '+Lamework::Middleware::ViewDisplayer';
 
         $app;
     };

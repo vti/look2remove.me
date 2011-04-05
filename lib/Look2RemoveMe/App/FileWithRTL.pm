@@ -22,8 +22,8 @@ sub serve_path {
     open my $fh, "<:raw", $file
         or return $self->return_403;
 
-    my $file = Look2RemoveMe::File->new(id => '123');
-    $file->decrement_rtl;
+    #my $file = Look2RemoveMe::File->new(id => '123');
+    #$file->decrement_rtl;
 
     my @stat = stat $file;
 
