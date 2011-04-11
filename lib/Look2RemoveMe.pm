@@ -6,6 +6,7 @@ use warnings;
 use base 'Lamework';
 
 use Plack::Builder;
+use Look2RemoveMe::File;
 
 sub compile_psgi_app {
     my $self = shift;
@@ -22,7 +23,7 @@ sub compile_psgi_app {
           root => "htdocs";
 
         enable 'Static' => path =>
-          qr{\.(?:js|css|jpe?g|gif|png|html?|js|css|swf|ico)$},
+          qr{\.(?:js|css|jpe?g|gif|png|html?|swf|ico)$},
           root => "htdocs";
 
         enable 'SimpleLogger', level => 'debug';
@@ -37,18 +38,31 @@ sub compile_psgi_app {
     };
 }
 
-sub setup {
+sub startup {
     my $self = shift;
 
     my $routes = $self->routes;
 
-    $routes->add_route('/', name => 'root');
-    $routes->add_route('/messages', defaults => {action => 'Message'});
-    $routes->add_route('/messages/:id', defaults => {action => 'MessageShow'});
-    $routes->add_route('/images',     defaults => {action => 'Image'});
-    $routes->add_route('/images/:id', defaults => {action => 'ImageShow'});
+    $routes->add_route(
+        '/',
+        name   => 'index',
+        method => 'get'
+    );
+    $routes->add_route(
+        '/',
+        name     => 'index',
+        defaults => {action => 'Index'},
+        method   => 'post'
+    );
+    $routes->add_route(
+        '/:id',
+        name     => 'view',
+        defaults => {action => 'View'}
+    );
 
-    return $routes;
+    Look2RemoveMe::File->set_root($self->home->catfile('htdocs', 'uploads'));
+
+    return $self;
 }
 
 1;

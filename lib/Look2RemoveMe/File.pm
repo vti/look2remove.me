@@ -17,6 +17,12 @@ sub set_root {
     $ROOT = File::Spec->catfile(@_);
 }
 
+sub root {
+    my $class = shift;
+
+    return $ROOT;
+}
+
 sub new {
     my $class = shift;
 
@@ -34,6 +40,17 @@ sub new_from_path {
     my $class = shift;
     my ($path) = @_;
 
+    my $root = $ROOT;
+    $path =~ s{^$root/?}{};
+    my $id = join '', split '/', $path;
+
+    return $class->new(id => $id);
+}
+
+sub create_from_path {
+    my $class = shift;
+    my ($path) = @_;
+
     open my $file, '<', $path or die $!;
 
     my $ctx = Digest::MD5->new;
@@ -47,12 +64,12 @@ sub new_from_path {
 
     $self->_prepare_path;
 
-    File::Copy::copy($path, $self->realpath) or die $!;
+    File::Copy::copy($path, $self->path) or die $!;
 
     return $self;
 }
 
-sub new_from_string {
+sub create_from_string {
     my $class = shift;
     my ($string) = @_;
 
@@ -67,7 +84,7 @@ sub new_from_string {
 
     $self->_prepare_path;
 
-    open my $file, '>', $self->realpath or die $!;
+    open my $file, '>', $self->path or die $!;
 
     print $file $string;
 
@@ -76,7 +93,7 @@ sub new_from_string {
 
 sub id { shift->{id} }
 
-sub realpath {
+sub path {
     my $self = shift;
 
     my $id = $self->{id};
@@ -90,13 +107,13 @@ sub realpath {
 sub exists {
     my $self = shift;
 
-    return -e $self->realpath;
+    return -e $self->path;
 }
 
 sub slurp {
     my $self = shift;
 
-    open my $file, '<', $self->realpath or die $!;
+    open my $file, '<', $self->path or die $!;
 
     local $/;
 
@@ -106,13 +123,16 @@ sub slurp {
 sub remove {
     my $self = shift;
 
-    unlink $self->realpath;
+    my $path = $self->path;
+    unlink $path or die "Can't unlink '$path': $!";
+
+    return $self;
 }
 
 sub _prepare_path {
     my $self = shift;
 
-    my $directory = File::Basename::dirname($self->realpath);
+    my $directory = File::Basename::dirname($self->path);
     File::Path::make_path($directory);
 }
 

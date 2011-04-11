@@ -5,7 +5,9 @@ use warnings;
 
 use base 'Plack::App::File';
 
+use Lamework::Registry;
 use Look2RemoveMe::File;
+
 use Plack::Util;
 use Plack::MIME;
 use HTTP::Date;
@@ -22,8 +24,10 @@ sub serve_path {
     open my $fh, "<:raw", $file
         or return $self->return_403;
 
-    #my $file = Look2RemoveMe::File->new(id => '123');
-    #$file->decrement_rtl;
+    my $home = Lamework::Registry->get('home');
+
+    my $file_to_remove = Look2RemoveMe::File->new_from_path($home->catfile($file));
+    $file_to_remove->remove;
 
     my @stat = stat $file;
 

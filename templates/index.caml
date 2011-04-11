@@ -1,0 +1,9 @@
+Hello
+
+<form method="POST" enctype="multipart/form-data">
+<input type="file" name="image" />
+{{#errors}}
+<div>{{image}}</div>
+{{/errors}}
+<input type="submit" />
+</form>
