@@ -28,6 +28,10 @@ sub compile_psgi_app {
 
         enable 'SimpleLogger', level => 'debug';
 
+        enable 'Session';
+
+        enable 'CSRFBlock';
+
         enable '+Lamework::Middleware::RoutesDispatcher';
 
         enable '+Lamework::Middleware::ActionBuilder';
