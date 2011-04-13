@@ -6,6 +6,7 @@ use warnings;
 use base 'Lamework';
 
 use Plack::Builder;
+use Plack::Session::Store::File;
 use Look2RemoveMe::File;
 
 sub compile_psgi_app {
@@ -28,7 +29,9 @@ sub compile_psgi_app {
 
         enable 'SimpleLogger', level => 'debug';
 
-        enable 'Session';
+        enable 'Session',
+          store =>
+          Plack::Session::Store::File->new(dir => $self->home->catfile('tmp'));
 
         enable 'CSRFBlock';
 
