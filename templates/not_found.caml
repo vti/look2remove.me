@@ -1,1 +1,6 @@
-Looks this image was already seen :(
+<div id="not_found">
+    <img src="/images/not_found.png" />
+    <p>
+    Looks like this image was already seen :(
+    </p>
+</div>

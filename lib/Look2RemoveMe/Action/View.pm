@@ -3,7 +3,7 @@ package Look2RemoveMe::Action::View;
 use strict;
 use warnings;
 
-use base 'Lamework::Action';
+use base 'Look2RemoveMe::Action';
 
 use Lamework::Registry;
 use Look2RemoveMe::File;
@@ -17,12 +17,13 @@ sub run {
 
     return $self->render_not_found unless $image->exists;
 
-    my $path = $self->_path_to_www($image->path);
+    my $url = $self->_path_to_url($image->path);
 
-    $self->set_var(image => {src => $path});
+    $self->set_layout(undef);
+    $self->set_var(image => {src => $url});
 }
 
-sub _path_to_www {
+sub _path_to_url {
     my $self = shift;
     my ($path) = @_;
 

@@ -1,1 +1,7 @@
-<a href="{{url}}">{{url}}</a>
+<div id="upload_success">
+    <p>
+    Share this link with your friend. But remember... it can be seen only once.
+    </p>
+    <input id="url" value="{{url}}" />
+    <small>Click to copy</small>
+</div>

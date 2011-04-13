@@ -1,1 +1,8 @@
-<img src="{{image.src}}" />
+<html>
+    <head>
+        <title>Look2Remove.me</title>
+    </head>
+    <body>
+        <img src="{{image.src}}" />
+    </body>
+</html>

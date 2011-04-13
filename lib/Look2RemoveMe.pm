@@ -46,12 +46,13 @@ sub startup {
     $routes->add_route(
         '/',
         name   => 'index',
+        defaults => {action => 'Index'},
         method => 'get'
     );
     $routes->add_route(
         '/',
         name     => 'index',
-        defaults => {action => 'Index'},
+        defaults => {action => 'Upload'},
         method   => 'post'
     );
     $routes->add_route(

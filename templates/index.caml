@@ -1,9 +1,17 @@
-Hello
-
-<form method="POST" enctype="multipart/form-data">
-<input type="file" name="image" />
-{{#errors}}
-<div>{{image}}</div>
-{{/errors}}
-<input type="submit" />
-</form>
+<div id="upload">
+    <p>
+    Right after upload you'll get an url that you can share, but the image will
+    removed as soon as it is visited.
+    </p>
+    <form method="POST" enctype="multipart/form-data">
+        <div class="input">
+            <input type="file" name="image" />
+            {{#errors}}
+            <div class="error">{{image}}</div>
+            {{/errors}}
+        </div>
+        <div class="submit">
+            <input type="submit" />
+        </div>
+    </form>
+</div>
