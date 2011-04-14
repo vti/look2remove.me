@@ -1,7 +1,7 @@
 <div id="upload">
     <p>
     Right after upload you'll get an url that you can share, but the image will
-    removed as soon as it is visited.
+    be removed as soon as it is visited.
     </p>
     <form method="POST" enctype="multipart/form-data">
         <div class="input">
