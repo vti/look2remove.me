@@ -20,11 +20,13 @@ sub run {
 
     return $self->set_var('errors' => {image => 'Required'}) unless $upload;
 
+    my $max_size_in_megs =
+      Lamework::Registry->get('config')->{max_upload_size} || 10;
+
     try {
         Lamework::Exception->throw("Doesn't look like an image to me")
           unless $upload->content_type =~ m{^image/};
 
-        my $max_size_in_megs = 1;
         if ($upload->size > $max_size_in_megs * 1024 * 1024) {
             Lamework::Exception->throw(
                 "File size is too big (max $max_size_in_megs Mb)");
