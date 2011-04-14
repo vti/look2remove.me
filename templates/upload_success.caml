@@ -1,7 +1,7 @@
 <div id="upload_success">
     <p>
-    Share this link with your friend. But remember... it can be seen only once.
+    {{#loc}}upload_success_description{{/loc}}
     </p>
     <input id="url" value="{{url}}" />
-    <small>Copy & Share</small>
+    <small>{{#loc}}Copy & Share{{/loc}}</small>
 </div>

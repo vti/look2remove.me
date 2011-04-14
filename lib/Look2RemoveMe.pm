@@ -35,6 +35,8 @@ sub compile_psgi_app {
 
         enable 'CSRFBlock';
 
+        enable '+Lamework::Middleware::I18N', namespace => __PACKAGE__;
+
         enable '+Lamework::Middleware::RoutesDispatcher';
 
         enable '+Lamework::Middleware::ActionBuilder';

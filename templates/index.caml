@@ -1,7 +1,6 @@
 <div id="upload">
     <p>
-    Right after upload you'll get an url that you can share, but the image will
-    be removed as soon as it is visited.
+    {{#loc}}upload_description{{/loc}}
     </p>
     <form method="POST" enctype="multipart/form-data">
         <div class="input">
@@ -11,13 +10,13 @@
             {{/errors}}
         </div>
         <div class="submit">
-            <input type="submit" />
+            <input type="submit" value="{{#loc}}Upload{{/loc}}" />
         </div>
     </form>
 
     {{#comments}}
         <hr />
-        <h1>Comments</h1>
+        <h1>{{#loc}}Comments{{/loc}}</h1>
         <div id="disqus_thread"></div>
         <script type="text/javascript">
             /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
@@ -38,6 +37,6 @@
     {{/comments}}
     {{^comments}}
         <hr />
-        <a href="/?comments=1">Show comments</a>
+        <a href="/?comments=1">{{#loc}}Show comments{{/loc}}</a>
     {{/comments}}
 </div>

@@ -29,6 +29,11 @@
 
 <body>
 
+  <div id="languages">
+      <a href="/en">English</a>
+      <a href="/ru">Русский</a>
+  </div>
+
   <div id="container">
     <div id="logo">
         <a href="/"><img src="/images/logo.png" title="Look2Remove.me" alt="Look2Remove.me logo" /></a>

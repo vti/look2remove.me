@@ -1,6 +1,6 @@
 <div id="not_found">
     <img src="/images/not_found.png" />
     <p>
-    Looks like this image was already seen :(
+    {{#loc}}not_found_message{{/loc}}
     </p>
 </div>

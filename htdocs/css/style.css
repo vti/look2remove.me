@@ -179,6 +179,11 @@ a, a:visited {
     color:#eee;
 }
 
+#languages {
+    padding:0.5em;
+    float:right;
+}
+
 #container {
     margin:auto;
     width:400px;
