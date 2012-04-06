@@ -5,17 +5,17 @@ use warnings;
 
 use base 'Plack::App::File';
 
-use Lamework::Registry;
 use Look2RemoveMe::File;
 
-use Plack::Util;
-use Plack::MIME;
+use File::MimeInfo::Magic ();
 use HTTP::Date;
+use Plack::MIME;
+use Plack::Util;
 
 sub serve_path {
     my($self, $env, $file) = @_;
 
-    my $content_type = Plack::MIME->mime_type($file) || 'text/plain';
+    my $content_type = File::MimeInfo::Magic::mimetype($file) || 'text/plain';
 
     if ($content_type =~ m!^text/!) {
         $content_type .= "; charset=" . ($self->encoding || "utf-8");
@@ -26,12 +26,11 @@ sub serve_path {
 
     my $home = Lamework::Registry->get('home');
 
+    my @stat = stat $file;
+    Plack::Util::set_io_path($fh, Cwd::realpath($file));
+
     my $file_to_remove = Look2RemoveMe::File->new_from_path($home->catfile($file));
     $file_to_remove->remove;
-
-    my @stat = stat $file;
-
-    Plack::Util::set_io_path($fh, Cwd::realpath($file));
 
     return [
         200,
@@ -40,7 +39,7 @@ sub serve_path {
             'Content-Length' => $stat[7],
             'Last-Modified'  => HTTP::Date::time2str( $stat[9] )
         ],
-        $fh,
+        $fh
     ];
 }
 
