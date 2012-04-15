@@ -29,7 +29,7 @@ sub serve_path {
     my @stat = stat $file;
     Plack::Util::set_io_path($fh, Cwd::realpath($file));
 
-    my $file_to_remove = Look2RemoveMe::File->new_from_path($home->catfile($file));
+    my $file_to_remove = Look2RemoveMe::File->new_from_path($file);
     $file_to_remove->remove;
 
     return [

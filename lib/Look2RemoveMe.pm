@@ -21,8 +21,7 @@ sub startup {
     $self->{config} = {};
 
     my $config =
-      Lamework::Config->new(home => $self->{home}->to_string)
-      ->load('config.yml');
+      Lamework::Config->new->load($self->{home}->catfile('config.yml'));
     $self->{config} = $config;
 
     $self->services->register(home   => $self->{home});
