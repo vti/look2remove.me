@@ -1,0 +1,5 @@
+---
+max_upload_size: 10
+session:
+    secret: secret
+    expires: 300

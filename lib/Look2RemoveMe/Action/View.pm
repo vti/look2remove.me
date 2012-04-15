@@ -5,7 +5,6 @@ use warnings;
 
 use base 'Look2RemoveMe::Action';
 
-use Lamework::Registry;
 use Look2RemoveMe::File;
 
 sub run {
@@ -15,7 +14,7 @@ sub run {
 
     my $image = Look2RemoveMe::File->new(id => $id);
 
-    return $self->render_not_found unless $image->exists;
+    return $self->not_found unless $image->exists;
 
     my $url = $self->_path_to_url($image->path);
 
@@ -27,8 +26,8 @@ sub _path_to_url {
     my $self = shift;
     my ($path) = @_;
 
-    my $home = Lamework::Registry->get('home');
-    $home = File::Spec->catfile($home, 'htdocs');
+    my $home = $self->service('home');
+    $home = $home->catfile('htdocs');
     $path =~ s{^$home}{};
 
     return $path;

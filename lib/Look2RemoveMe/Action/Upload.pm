@@ -20,11 +20,10 @@ sub run {
 
     return $self->set_var('errors' => {image => 'Required'}) unless $upload;
 
-    my $max_size_in_megs =
-      Lamework::Registry->get('config')->{max_upload_size} || 10;
+    my $max_size_in_megs = $self->service('config')->{max_upload_size} || 10;
 
     try {
-        Lamework::Exception->throw("Doesn't look like an image to me")
+        raise 'Lamework::Exception::Base' => "Doesn't look like an image to me"
           unless $upload->content_type =~ m{^image/};
 
         if ($upload->size > $max_size_in_megs * 1024 * 1024) {
@@ -40,9 +39,9 @@ sub run {
     catch {
         my $e = $_;
 
-        die $e unless $e->isa('Lamework::Exception');
+        $e->rethrow unless $e->does('Lamework::Exception');
 
-        $self->set_var('errors' => {image => $e->error});
+        $self->set_var('errors' => {image => $e->message});
     };
 }
 

@@ -24,7 +24,7 @@ sub serve_path {
     open my $fh, "<:raw", $file
         or return $self->return_403;
 
-    my $home = Lamework::Registry->get('home');
+    my $home = $env->{'lamework.services'}->service('home');
 
     my @stat = stat $file;
     Plack::Util::set_io_path($fh, Cwd::realpath($file));
