@@ -3,15 +3,15 @@ package Look2RemoveMe;
 use strict;
 use warnings;
 
-use base 'Lamework';
+use base 'Turnaround';
 
-use Lamework::ActionFactory;
-use Lamework::Config;
-use Lamework::Dispatcher::Routes;
-use Lamework::Displayer;
-use Lamework::I18N;
-use Lamework::Renderer::Caml;
-use Lamework::Routes;
+use Turnaround::ActionFactory;
+use Turnaround::Config;
+use Turnaround::Dispatcher::Routes;
+use Turnaround::Displayer;
+use Turnaround::I18N;
+use Turnaround::Renderer::Caml;
+use Turnaround::Routes;
 
 use Look2RemoveMe::File;
 
@@ -21,7 +21,7 @@ sub startup {
     $self->{config} = {};
 
     my $config =
-      Lamework::Config->new->load($self->{home}->catfile('config.yml'));
+      Turnaround::Config->new->load($self->{home}->catfile('config.yml'));
     $self->{config} = $config;
 
     $self->services->register(home   => $self->{home});
@@ -30,10 +30,10 @@ sub startup {
     Look2RemoveMe::File->set_root($self->{home}->catfile('htdocs', 'uploads'));
 
     my $displayer =
-      Lamework::Displayer->new(
-        renderer => Lamework::Renderer::Caml->new(home => $self->{home}));
+      Turnaround::Displayer->new(
+        renderer => Turnaround::Renderer::Caml->new(home => $self->{home}));
 
-    my $i18n = Lamework::I18N->new(app_class => __PACKAGE__);
+    my $i18n = Turnaround::I18N->new(app_class => __PACKAGE__);
 
     $self->add_middleware(
         'Static',
@@ -66,11 +66,11 @@ sub startup {
 
     $self->add_middleware('RequestDispatcher',
         dispatcher =>
-          Lamework::Dispatcher::Routes->new(routes => $self->_build_routes));
+          Turnaround::Dispatcher::Routes->new(routes => $self->_build_routes));
 
     $self->add_middleware(
         'ActionDispatcher',
-        action_factory => Lamework::ActionFactory->new(
+        action_factory => Turnaround::ActionFactory->new(
             namespace => ref($self) . '::Action::'
         )
     );
@@ -83,7 +83,7 @@ sub startup {
 sub _build_routes {
     my $self = shift;
 
-    my $routes = Lamework::Routes->new;
+    my $routes = Turnaround::Routes->new;
 
     $routes->add_route('/', name => 'index',  method => 'get');
     $routes->add_route('/', name => 'upload', method => 'post');

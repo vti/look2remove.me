@@ -1,3 +1,3 @@
-[submodule "contrib/lamework"]
-	path = contrib/lamework
-	url = https://github.com/vti/lamework
+[submodule "contrib/turnaround"]
+	path = contrib/turnaround
+	url = https://github.com/vti/turnaround.git
